@@ -1,6 +1,13 @@
 This boggle implementation uses NLTK and Wordnet as a rough-and-ready source of English words.
 As you'll see if you check the code, I had fun with the recursive search and lookups. I was
-not interested in the aesthetics, and I have not fussed too much with the dictionary.
+not interested in the aesthetics, and I have not fussed too much with the dictionary
+which has drawbacks as noted below.
+
+I defined the letter cubes from my kids' own game. I don't know if the letter selections
+are universal across games, or standardised.
+
+Qu appears on one face of one cube.  This will appear as Q on the 4x4 board matrix, but as qu in 
+words found.
 
 PREPARATION
 ===========
