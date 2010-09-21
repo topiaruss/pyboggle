@@ -1,0 +1,2 @@
+import btdi
+print 'done'
