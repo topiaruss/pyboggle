@@ -1,30 +1,33 @@
-This boggle implementation uses NLTK and Wordnet as a rough-and-ready source of English words.
-As you'll see if you check the code, I had fun with the recursive search and lookups. I was
-not interested in the aesthetics, and I have not fussed too much with the dictionary
-which has drawbacks as noted below.
+This boggle implementation uses NLTK and Wordnet as a rough-and-ready source
+of English words. As you'll see if you check the code, I had fun with the
+recursive search and lookups. I was not interested in the aesthetics, and I
+have not fussed too much with the dictionary which has drawbacks as noted
+below.
 
-I defined the letter cubes from my kids' own game. I don't know if the letter selections
-are universal across games, or standardised.
+I defined the letter cubes from my kids' own game. I don't know if the letter
+selections are universal across games, or standardised.
 
-Qu appears on one face of one cube.  This will appear as Q on the 4x4 board matrix, but as qu in 
-words found.
+Qu appears on one face of one cube. This will appear as Q on the 4x4 board
+matrix, but as qu in words found.
 
 PREPARATION
 ===========
 
-On my Mac, I installed NLTK using Darwin Ports, then followed the instructions from NLTK on
-loading a corpus. 
+On my Mac, I installed NLTK using Darwin Ports, then followed the instructions
+from NLTK on loading a corpus.
 
 I pulled down the regular Wordnet corpus.  Perhaps I'll try the Shakespeare
 corpus later, for a classical twist.
 
-Note that it's important to invoke the Darwin Ports python, or you won't be able to import
-nltk.
+Note that it's important to invoke the Darwin Ports python, or you won't be
+able to import nltk.
 
-A high-performance incremental search dictionary found prebuilt in btdi.py can be rebuilt 
-automatically by running 
+A high-performance incremental search dictionary found prebuilt in btdi.py can
+be rebuilt automatically by running
 
      % /opt/local/bin/python2.6 btdictmaker.py 
+     
+(It's the compilation of btdi.py that makes the first run take a few seconds.)
 
 Then simply invoke boggle, and look at the output, as shown below.
 
@@ -33,15 +36,14 @@ TODO
 
    - I did not bother to add scoring.
    
-   - Plurals are not present in wordnet. Ideally, btdictmaker should differentiate the
-     parts of speech and add plural forms for nouns.  Of course there are special cases for
-     latin names (medium -> media) so the effort may be better spent finding a more 
-     appropriate dictionary source that presents plural forms, and knows all the 
-     exceptions
-
-   - a bit of tidy up would be useful, the old seek() needs removal, the references to 
-     nltk in boogle.py can then go, to make startup instantaneous.  Without nltk in
-     boogle.py, everything but the dict maker will run in any python.
+   - Plurals are not present in wordnet. Ideally, btdictmaker should
+     differentiate the parts of speech and add plural forms for nouns. Of
+     course there are special cases for latin names (medium -> media) so the
+     effort may be better spent finding a more appropriate dictionary source
+     that presents plural forms, and knows all the exceptions
+     
+   - Wordnet contains placenames. No proper nouns are allowed in the real
+     game.
 
 THE OUTPUT
 ==========
@@ -49,508 +51,180 @@ THE OUTPUT
 Clearly this is very basic.  
 
 First the game board is printed, then the words. In the first part of the list
-the words are in the order of emergence from the search algorithm so that you can easily
-follow along.  Later an alpha sorted summary of unique words is printed, together
-with the coordinated of the traversal chain.
+the words are in the order of emergence from the search algorithm so that you
+can easily follow along. Later an alpha sorted summary of unique words is
+printed, together with the coordinated of the traversal chain.
 
   
-% /opt/local/bin/python2.6 boggle.py
-Z O D Q
-E R N L
-O T A E
-B E T A
-zonal
-zone
-zero
-zeta
-ore
-oreo
-oran
-oral
-orate
-one
-doze
-doe
-don
-dona
-donar
-donate
-done
-drone
-ezra
-eon
-ern
-era
-erato
-etna
-eta
-rod
-roe
-ron
-ret
-rote
-rota
-rotate
-rotten
-rob
-robe
-rand
-rant
-rat
-rate
-ratel
-nod
-nard
-natta
-near
-neat
-net
-lard
-land
-lane
-late
-later
-latrobe
-latten
-latter
-latent
-lend
-lent
-lento
-lena
-lenard
-lea
-lear
-learn
-lean
-let
-letter
-orzo
-tern
-ternate
-tera
+[Streak2:~/dev/int/pyboggle] russ% time /opt/local/bin/python2.6 boggle.py
+T S P T
+B O E L
+W U U H
+L M H E
+top
 toe
-tor
-torn
-toea
-tar
-taro
-tare
-tarn
-tan
-tael
-tat
-tate
-tea
-tear
-teal
-tet
-are
-arete
-arno
-art
-ant
-ante
-ale
-ate
-attend
-attorn
-aten
-end
-enrobe
-enter
-enate
-elan
-eland
-elate
-ear
-earn
-eat
-eater
-boron
-bore
-born
-borate
+tow
+stop
+stob
+stow
+spot
+spelt
+sop
+sob
+sow
+sou
+soul
+set
+seoul
+pot
+post
+pose
+poe
+poet
+pest
+pesto
+pet
+pelt
+plum
+test
 bot
-bota
-bet
-beta
-bear
-beard
-bean
-beat
-beater
-beaten
-better
-bettor
-betatron
-betel
-tart
-talent
-ten
-tenor
-tend
-tent
-tenter
-tetra
-aaron
-aare
-attar
-aare
-     [[3, 3], [2, 2], [1, 1], [1, 0]]
-aaron
-     [[3, 3], [2, 2], [1, 1], [0, 1], [1, 2]]
-ale
-     [[2, 2], [1, 3], [2, 3]]
-ant
-     [[2, 2], [1, 2], [2, 1]]
-ante
-     [[2, 2], [1, 2], [2, 1], [1, 0]]
-     [[2, 2], [1, 2], [2, 1], [3, 1]]
-are
-     [[2, 2], [1, 1], [1, 0]]
-arete
-     [[2, 2], [1, 1], [1, 0], [2, 1], [3, 1]]
-arno
-     [[2, 2], [1, 1], [1, 2], [0, 1]]
-art
-     [[2, 2], [1, 1], [2, 1]]
-ate
-     [[2, 2], [2, 1], [1, 0]]
-     [[2, 2], [2, 1], [3, 1]]
-     [[2, 2], [3, 2], [2, 3]]
-     [[2, 2], [3, 2], [3, 1]]
-     [[3, 3], [3, 2], [2, 3]]
-     [[3, 3], [3, 2], [3, 1]]
-aten
-     [[2, 2], [3, 2], [2, 3], [1, 2]]
-     [[3, 3], [3, 2], [2, 3], [1, 2]]
-attar
-     [[3, 3], [3, 2], [2, 1], [2, 2], [1, 1]]
-attend
-     [[2, 2], [2, 1], [3, 2], [2, 3], [1, 2], [0, 2]]
-attorn
-     [[2, 2], [3, 2], [2, 1], [2, 0], [1, 1], [1, 2]]
-     [[3, 3], [3, 2], [2, 1], [2, 0], [1, 1], [1, 2]]
-bean
-     [[3, 0], [3, 1], [2, 2], [1, 2]]
-bear
-     [[3, 0], [3, 1], [2, 2], [1, 1]]
-beard
-     [[3, 0], [3, 1], [2, 2], [1, 1], [0, 2]]
-beat
-     [[3, 0], [3, 1], [2, 2], [2, 1]]
-     [[3, 0], [3, 1], [2, 2], [3, 2]]
-beaten
-     [[3, 0], [3, 1], [2, 2], [3, 2], [2, 3], [1, 2]]
-beater
-     [[3, 0], [3, 1], [2, 2], [2, 1], [1, 0], [1, 1]]
-bet
-     [[3, 0], [3, 1], [2, 1]]
-     [[3, 0], [3, 1], [3, 2]]
-beta
-     [[3, 0], [3, 1], [2, 1], [2, 2]]
-     [[3, 0], [3, 1], [3, 2], [2, 2]]
-     [[3, 0], [3, 1], [3, 2], [3, 3]]
-betatron
-     [[3, 0], [3, 1], [3, 2], [2, 2], [2, 1], [1, 1], [0, 1], [1, 2]]
-betel
-     [[3, 0], [3, 1], [3, 2], [2, 3], [1, 3]]
-better
-     [[3, 0], [3, 1], [3, 2], [2, 1], [1, 0], [1, 1]]
-bettor
-     [[3, 0], [3, 1], [3, 2], [2, 1], [2, 0], [1, 1]]
-borate
-     [[3, 0], [2, 0], [1, 1], [2, 2], [2, 1], [1, 0]]
-     [[3, 0], [2, 0], [1, 1], [2, 2], [2, 1], [3, 1]]
-     [[3, 0], [2, 0], [1, 1], [2, 2], [3, 2], [2, 3]]
-     [[3, 0], [2, 0], [1, 1], [2, 2], [3, 2], [3, 1]]
-bore
-     [[3, 0], [2, 0], [1, 1], [1, 0]]
-born
-     [[3, 0], [2, 0], [1, 1], [1, 2]]
-boron
-     [[3, 0], [2, 0], [1, 1], [0, 1], [1, 2]]
+bos
+bose
+bop
+bow
+bowl
+bum
+ops
+opel
+owl
+epos
+eos
+let
+leo
+leu
+luo
+wop
+woe
+hep
+hel
+help
+hue
+hum
+mule
+hub
+
+collated and sorted word with their traversal chains
+bop
+     [[1, 0], [1, 1], [0, 2]]
+bos
+     [[1, 0], [1, 1], [0, 1]]
+bose
+     [[1, 0], [1, 1], [0, 1], [1, 2]]
 bot
-     [[3, 0], [2, 0], [2, 1]]
-bota
-     [[3, 0], [2, 0], [2, 1], [2, 2]]
-doe
-     [[0, 2], [0, 1], [1, 0]]
-don
-     [[0, 2], [0, 1], [1, 2]]
-dona
-     [[0, 2], [0, 1], [1, 2], [2, 2]]
-donar
-     [[0, 2], [0, 1], [1, 2], [2, 2], [1, 1]]
-donate
-     [[0, 2], [0, 1], [1, 2], [2, 2], [2, 1], [1, 0]]
-     [[0, 2], [0, 1], [1, 2], [2, 2], [2, 1], [3, 1]]
-     [[0, 2], [0, 1], [1, 2], [2, 2], [3, 2], [2, 3]]
-     [[0, 2], [0, 1], [1, 2], [2, 2], [3, 2], [3, 1]]
-done
-     [[0, 2], [0, 1], [1, 2], [2, 3]]
-doze
-     [[0, 2], [0, 1], [0, 0], [1, 0]]
-drone
-     [[0, 2], [1, 1], [0, 1], [1, 2], [2, 3]]
-ear
-     [[2, 3], [2, 2], [1, 1]]
-     [[3, 1], [2, 2], [1, 1]]
-earn
-     [[2, 3], [2, 2], [1, 1], [1, 2]]
-     [[3, 1], [2, 2], [1, 1], [1, 2]]
-eat
-     [[2, 3], [2, 2], [2, 1]]
-     [[2, 3], [2, 2], [3, 2]]
-     [[2, 3], [3, 3], [3, 2]]
-     [[3, 1], [2, 2], [2, 1]]
-     [[3, 1], [2, 2], [3, 2]]
-eater
-     [[2, 3], [2, 2], [2, 1], [1, 0], [1, 1]]
-     [[3, 1], [2, 2], [2, 1], [1, 0], [1, 1]]
-elan
-     [[2, 3], [1, 3], [2, 2], [1, 2]]
-eland
-     [[2, 3], [1, 3], [2, 2], [1, 2], [0, 2]]
-elate
-     [[2, 3], [1, 3], [2, 2], [2, 1], [1, 0]]
-     [[2, 3], [1, 3], [2, 2], [2, 1], [3, 1]]
-     [[2, 3], [1, 3], [2, 2], [3, 2], [3, 1]]
-enate
-     [[2, 3], [1, 2], [2, 2], [2, 1], [1, 0]]
-     [[2, 3], [1, 2], [2, 2], [2, 1], [3, 1]]
-     [[2, 3], [1, 2], [2, 2], [3, 2], [3, 1]]
-end
+     [[1, 0], [1, 1], [0, 0]]
+bow
+     [[1, 0], [1, 1], [2, 0]]
+bowl
+     [[1, 0], [1, 1], [2, 0], [3, 0]]
+bum
+     [[1, 0], [2, 1], [3, 1]]
+eos
+     [[1, 2], [1, 1], [0, 1]]
+epos
+     [[1, 2], [0, 2], [1, 1], [0, 1]]
+hel
+     [[2, 3], [1, 2], [1, 3]]
+help
+     [[2, 3], [1, 2], [1, 3], [0, 2]]
+hep
      [[2, 3], [1, 2], [0, 2]]
-enrobe
-     [[2, 3], [1, 2], [1, 1], [2, 0], [3, 0], [3, 1]]
-enter
-     [[2, 3], [1, 2], [2, 1], [1, 0], [1, 1]]
-eon
-     [[1, 0], [0, 1], [1, 2]]
-era
-     [[1, 0], [1, 1], [2, 2]]
-erato
-     [[1, 0], [1, 1], [2, 2], [2, 1], [2, 0]]
-ern
-     [[1, 0], [1, 1], [1, 2]]
-eta
-     [[1, 0], [2, 1], [2, 2]]
-     [[2, 3], [3, 2], [2, 2]]
-     [[2, 3], [3, 2], [3, 3]]
-     [[3, 1], [2, 1], [2, 2]]
-     [[3, 1], [3, 2], [2, 2]]
-     [[3, 1], [3, 2], [3, 3]]
-etna
-     [[1, 0], [2, 1], [1, 2], [2, 2]]
-     [[3, 1], [2, 1], [1, 2], [2, 2]]
-ezra
-     [[1, 0], [0, 0], [1, 1], [2, 2]]
-land
-     [[1, 3], [2, 2], [1, 2], [0, 2]]
-lane
-     [[1, 3], [2, 2], [1, 2], [2, 3]]
-lard
-     [[1, 3], [2, 2], [1, 1], [0, 2]]
-late
-     [[1, 3], [2, 2], [2, 1], [1, 0]]
-     [[1, 3], [2, 2], [2, 1], [3, 1]]
-     [[1, 3], [2, 2], [3, 2], [2, 3]]
-     [[1, 3], [2, 2], [3, 2], [3, 1]]
-latent
-     [[1, 3], [2, 2], [3, 2], [2, 3], [1, 2], [2, 1]]
-later
-     [[1, 3], [2, 2], [2, 1], [1, 0], [1, 1]]
-latrobe
-     [[1, 3], [2, 2], [2, 1], [1, 1], [2, 0], [3, 0], [3, 1]]
-latten
-     [[1, 3], [2, 2], [2, 1], [3, 2], [2, 3], [1, 2]]
-latter
-     [[1, 3], [2, 2], [3, 2], [2, 1], [1, 0], [1, 1]]
-lea
-     [[1, 3], [2, 3], [2, 2]]
-     [[1, 3], [2, 3], [3, 3]]
-lean
-     [[1, 3], [2, 3], [2, 2], [1, 2]]
-lear
-     [[1, 3], [2, 3], [2, 2], [1, 1]]
-learn
-     [[1, 3], [2, 3], [2, 2], [1, 1], [1, 2]]
-lena
-     [[1, 3], [2, 3], [1, 2], [2, 2]]
-lenard
-     [[1, 3], [2, 3], [1, 2], [2, 2], [1, 1], [0, 2]]
-lend
-     [[1, 3], [2, 3], [1, 2], [0, 2]]
-lent
-     [[1, 3], [2, 3], [1, 2], [2, 1]]
-lento
-     [[1, 3], [2, 3], [1, 2], [2, 1], [2, 0]]
-let
-     [[1, 3], [2, 3], [3, 2]]
-letter
-     [[1, 3], [2, 3], [3, 2], [2, 1], [1, 0], [1, 1]]
-nard
-     [[1, 2], [2, 2], [1, 1], [0, 2]]
-natta
-     [[1, 2], [2, 2], [2, 1], [3, 2], [3, 3]]
-near
-     [[1, 2], [2, 3], [2, 2], [1, 1]]
-neat
-     [[1, 2], [2, 3], [2, 2], [2, 1]]
-     [[1, 2], [2, 3], [2, 2], [3, 2]]
-     [[1, 2], [2, 3], [3, 3], [3, 2]]
-net
-     [[1, 2], [2, 3], [3, 2]]
-nod
-     [[1, 2], [0, 1], [0, 2]]
-one
-     [[0, 1], [1, 2], [2, 3]]
-oral
-     [[0, 1], [1, 1], [2, 2], [1, 3]]
-     [[2, 0], [1, 1], [2, 2], [1, 3]]
-oran
-     [[0, 1], [1, 1], [2, 2], [1, 2]]
-     [[2, 0], [1, 1], [2, 2], [1, 2]]
-orate
-     [[0, 1], [1, 1], [2, 2], [2, 1], [1, 0]]
-     [[0, 1], [1, 1], [2, 2], [2, 1], [3, 1]]
-     [[0, 1], [1, 1], [2, 2], [3, 2], [2, 3]]
-     [[0, 1], [1, 1], [2, 2], [3, 2], [3, 1]]
-     [[2, 0], [1, 1], [2, 2], [2, 1], [1, 0]]
-     [[2, 0], [1, 1], [2, 2], [2, 1], [3, 1]]
-     [[2, 0], [1, 1], [2, 2], [3, 2], [2, 3]]
-     [[2, 0], [1, 1], [2, 2], [3, 2], [3, 1]]
-ore
-     [[0, 1], [1, 1], [1, 0]]
-     [[2, 0], [1, 1], [1, 0]]
-oreo
-     [[0, 1], [1, 1], [1, 0], [2, 0]]
-     [[2, 0], [1, 1], [1, 0], [0, 1]]
-orzo
-     [[2, 0], [1, 1], [0, 0], [0, 1]]
-rand
-     [[1, 1], [2, 2], [1, 2], [0, 2]]
-rant
-     [[1, 1], [2, 2], [1, 2], [2, 1]]
-rat
-     [[1, 1], [2, 2], [2, 1]]
-     [[1, 1], [2, 2], [3, 2]]
-rate
-     [[1, 1], [2, 2], [2, 1], [1, 0]]
-     [[1, 1], [2, 2], [2, 1], [3, 1]]
-     [[1, 1], [2, 2], [3, 2], [2, 3]]
-     [[1, 1], [2, 2], [3, 2], [3, 1]]
-ratel
-     [[1, 1], [2, 2], [3, 2], [2, 3], [1, 3]]
-ret
-     [[1, 1], [1, 0], [2, 1]]
-rob
-     [[1, 1], [2, 0], [3, 0]]
-robe
-     [[1, 1], [2, 0], [3, 0], [3, 1]]
-rod
-     [[1, 1], [0, 1], [0, 2]]
-roe
-     [[1, 1], [0, 1], [1, 0]]
-     [[1, 1], [2, 0], [1, 0]]
-     [[1, 1], [2, 0], [3, 1]]
-ron
-     [[1, 1], [0, 1], [1, 2]]
-rota
-     [[1, 1], [2, 0], [2, 1], [2, 2]]
-rotate
-     [[1, 1], [2, 0], [2, 1], [2, 2], [3, 2], [2, 3]]
-     [[1, 1], [2, 0], [2, 1], [2, 2], [3, 2], [3, 1]]
-rote
-     [[1, 1], [2, 0], [2, 1], [1, 0]]
-     [[1, 1], [2, 0], [2, 1], [3, 1]]
-rotten
-     [[1, 1], [2, 0], [2, 1], [3, 2], [2, 3], [1, 2]]
-tael
-     [[2, 1], [2, 2], [2, 3], [1, 3]]
-     [[3, 2], [2, 2], [2, 3], [1, 3]]
-     [[3, 2], [3, 3], [2, 3], [1, 3]]
-talent
-     [[3, 2], [2, 2], [1, 3], [2, 3], [1, 2], [2, 1]]
-tan
-     [[2, 1], [2, 2], [1, 2]]
+hub
+     [[3, 2], [2, 1], [1, 0]]
+hue
+     [[2, 3], [2, 2], [1, 2]]
+     [[2, 3], [2, 2], [3, 3]]
+     [[3, 2], [2, 1], [1, 2]]
      [[3, 2], [2, 2], [1, 2]]
-tar
-     [[2, 1], [2, 2], [1, 1]]
-     [[3, 2], [2, 2], [1, 1]]
-tare
-     [[2, 1], [2, 2], [1, 1], [1, 0]]
-     [[3, 2], [2, 2], [1, 1], [1, 0]]
-tarn
-     [[2, 1], [2, 2], [1, 1], [1, 2]]
-     [[3, 2], [2, 2], [1, 1], [1, 2]]
-taro
-     [[2, 1], [2, 2], [1, 1], [0, 1]]
-     [[2, 1], [2, 2], [1, 1], [2, 0]]
-     [[3, 2], [2, 2], [1, 1], [0, 1]]
-     [[3, 2], [2, 2], [1, 1], [2, 0]]
-tart
-     [[3, 2], [2, 2], [1, 1], [2, 1]]
-tat
-     [[2, 1], [2, 2], [3, 2]]
-     [[3, 2], [2, 2], [2, 1]]
-tate
-     [[2, 1], [2, 2], [3, 2], [2, 3]]
-     [[2, 1], [2, 2], [3, 2], [3, 1]]
-     [[3, 2], [2, 2], [2, 1], [1, 0]]
-     [[3, 2], [2, 2], [2, 1], [3, 1]]
-tea
-     [[2, 1], [3, 1], [2, 2]]
-     [[3, 2], [2, 3], [2, 2]]
-     [[3, 2], [2, 3], [3, 3]]
-     [[3, 2], [3, 1], [2, 2]]
-teal
-     [[2, 1], [3, 1], [2, 2], [1, 3]]
-     [[3, 2], [2, 3], [2, 2], [1, 3]]
-     [[3, 2], [3, 1], [2, 2], [1, 3]]
-tear
-     [[2, 1], [3, 1], [2, 2], [1, 1]]
-     [[3, 2], [2, 3], [2, 2], [1, 1]]
-     [[3, 2], [3, 1], [2, 2], [1, 1]]
-ten
-     [[3, 2], [2, 3], [1, 2]]
-tend
-     [[3, 2], [2, 3], [1, 2], [0, 2]]
-tenor
-     [[3, 2], [2, 3], [1, 2], [0, 1], [1, 1]]
-tent
-     [[3, 2], [2, 3], [1, 2], [2, 1]]
-tenter
-     [[3, 2], [2, 3], [1, 2], [2, 1], [1, 0], [1, 1]]
-tera
-     [[2, 1], [1, 0], [1, 1], [2, 2]]
-tern
-     [[2, 1], [1, 0], [1, 1], [1, 2]]
-ternate
-     [[2, 1], [1, 0], [1, 1], [1, 2], [2, 2], [3, 2], [2, 3]]
-     [[2, 1], [1, 0], [1, 1], [1, 2], [2, 2], [3, 2], [3, 1]]
-tet
-     [[2, 1], [3, 1], [3, 2]]
-     [[3, 2], [3, 1], [2, 1]]
-tetra
-     [[3, 2], [3, 1], [2, 1], [1, 1], [2, 2]]
+     [[3, 2], [2, 2], [3, 3]]
+hum
+     [[2, 3], [2, 2], [3, 1]]
+     [[3, 2], [2, 1], [3, 1]]
+     [[3, 2], [2, 2], [3, 1]]
+leo
+     [[1, 3], [1, 2], [1, 1]]
+let
+     [[1, 3], [1, 2], [0, 3]]
+leu
+     [[1, 3], [1, 2], [2, 1]]
+     [[1, 3], [1, 2], [2, 2]]
+luo
+     [[1, 3], [2, 2], [1, 1]]
+     [[3, 0], [2, 1], [1, 1]]
+mule
+     [[3, 1], [2, 2], [1, 3], [1, 2]]
+opel
+     [[1, 1], [0, 2], [1, 2], [1, 3]]
+ops
+     [[1, 1], [0, 2], [0, 1]]
+owl
+     [[1, 1], [2, 0], [3, 0]]
+pelt
+     [[0, 2], [1, 2], [1, 3], [0, 3]]
+pest
+     [[0, 2], [1, 2], [0, 1], [0, 0]]
+pesto
+     [[0, 2], [1, 2], [0, 1], [0, 0], [1, 1]]
+pet
+     [[0, 2], [1, 2], [0, 3]]
+plum
+     [[0, 2], [1, 3], [2, 2], [3, 1]]
+poe
+     [[0, 2], [1, 1], [1, 2]]
+poet
+     [[0, 2], [1, 1], [1, 2], [0, 3]]
+pose
+     [[0, 2], [1, 1], [0, 1], [1, 2]]
+post
+     [[0, 2], [1, 1], [0, 1], [0, 0]]
+pot
+     [[0, 2], [1, 1], [0, 0]]
+seoul
+     [[0, 1], [1, 2], [1, 1], [2, 1], [3, 0]]
+     [[0, 1], [1, 2], [1, 1], [2, 2], [1, 3]]
+set
+     [[0, 1], [1, 2], [0, 3]]
+sob
+     [[0, 1], [1, 1], [1, 0]]
+sop
+     [[0, 1], [1, 1], [0, 2]]
+sou
+     [[0, 1], [1, 1], [2, 1]]
+     [[0, 1], [1, 1], [2, 2]]
+soul
+     [[0, 1], [1, 1], [2, 1], [3, 0]]
+     [[0, 1], [1, 1], [2, 2], [1, 3]]
+sow
+     [[0, 1], [1, 1], [2, 0]]
+spelt
+     [[0, 1], [0, 2], [1, 2], [1, 3], [0, 3]]
+spot
+     [[0, 1], [0, 2], [1, 1], [0, 0]]
+stob
+     [[0, 1], [0, 0], [1, 1], [1, 0]]
+stop
+     [[0, 1], [0, 0], [1, 1], [0, 2]]
+stow
+     [[0, 1], [0, 0], [1, 1], [2, 0]]
+test
+     [[0, 3], [1, 2], [0, 1], [0, 0]]
 toe
-     [[2, 1], [2, 0], [1, 0]]
-     [[2, 1], [2, 0], [3, 1]]
-toea
-     [[2, 1], [2, 0], [3, 1], [2, 2]]
-tor
-     [[2, 1], [2, 0], [1, 1]]
-torn
-     [[2, 1], [2, 0], [1, 1], [1, 2]]
-zero
-     [[0, 0], [1, 0], [1, 1], [0, 1]]
-     [[0, 0], [1, 0], [1, 1], [2, 0]]
-zeta
-     [[0, 0], [1, 0], [2, 1], [2, 2]]
-zonal
-     [[0, 0], [0, 1], [1, 2], [2, 2], [1, 3]]
-zone
-     [[0, 0], [0, 1], [1, 2], [2, 3]]
+     [[0, 0], [1, 1], [1, 2]]
+top
+     [[0, 0], [1, 1], [0, 2]]
+tow
+     [[0, 0], [1, 1], [2, 0]]
+woe
+     [[2, 0], [1, 1], [1, 2]]
+wop
+     [[2, 0], [1, 1], [0, 2]]
+0.447u 0.128s 0:00.57 98.2%     0+0k 0+0io 0pf+0w
