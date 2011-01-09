@@ -63,7 +63,8 @@ def seek(chain,s=''):
         if result == 1:
             entry = found.setdefault(s, [])
             if not entry:
-                print s # print on first add to list
+                pass
+                #print s # print on first add to list
             entry.append(chain)
 
     nbor = [[x+d[0],y+d[1]] for d in directions]
@@ -85,6 +86,15 @@ for col in range(width):
         seek([[col,row]])
 
 print
+print "ok, well, I'm finished ;)"
+print """
+Although I do boast a bit, I'm still not smart enough to know whether a word 
+in my dictionary is a name, like AMUR, which is an Asian river. So 
+I would count that as a word, when I really should not. :(
+"""
+if 'Q' in [item for sublist in board for item in sublist]:
+    print""" Oh, and remember that Q means "Qu", and counts as 2 letters.\n"""
+raw_input("hit <return> when you are ready for me to reveal my %s words!" % len(found) ) 
 print 'collated and sorted word with their traversal chains'
 for k in sorted(found):
     print k
